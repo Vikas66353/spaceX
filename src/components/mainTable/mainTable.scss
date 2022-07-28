@@ -1,0 +1,31 @@
+$upcoming_text:#92400F;
+$success_text:#03543F;
+$failed_text:#981B1C;
+
+.table_container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.upcoming_text{
+    color:$upcoming_text;
+}
+.success_text{
+    color:$success_text;
+}
+.failed_text{
+    color:$failed_text;
+}
+
+Table{
+    width: 960px;
+    height: 600px;
+tr{
+    font-weight: 400;
+    line-height: 12px;
+    font-size: 12px;
+}
+}
