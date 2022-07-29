@@ -11,12 +11,13 @@ interface Props {
 }
 
 const MainTableModal = ({ rowID, handleCancel, isModalVisible }: Props) => {
-  const { data, loading } = useQuery<Root, id>(FindLaunchDetail, {variables: { id: rowID },
-});
+  const { data, loading } = useQuery<Root, id>(FindLaunchDetail, {
+    variables: { id: rowID },
+  });
 
-  if(loading){
-    return <Spin/>
-  }else{
+  if (loading) {
+    return <Spin />;
+  } else {
     return (
       <div className="container">
         <Modal
@@ -122,7 +123,9 @@ const MainTableModal = ({ rowID, handleCancel, isModalVisible }: Props) => {
               </div>
               <div className="info">
                 <label>Orbit</label>
-                <span>{data?.launch.rocket.second_stage.payloads[0].orbit}</span>
+                <span>
+                  {data?.launch.rocket.second_stage.payloads[0].orbit}
+                </span>
               </div>
               <div className="info">
                 <label>Launch Site</label>

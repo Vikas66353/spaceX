@@ -2,7 +2,7 @@ $upcoming_text: #92400f;
 $success_text: #03543f;
 $failed_text: #981b1c;
 
-main{
+main {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,10 +21,4 @@ main{
 
 Table {
   width: 960px;
-  position:static;
-  tr {
-    font-weight: 400;
-    line-height: 12px;
-    font-size: 12px;
-  }
 }
