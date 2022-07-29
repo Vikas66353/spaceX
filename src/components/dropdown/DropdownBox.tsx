@@ -84,6 +84,12 @@ const DropdownBox = () => {
       ]}
     />
   );
+
+  if(loading===true){
+    return <div className="spin">
+      <Spin size='large'/>
+    </div>
+  }else{
   return (
     <div className='main-container'>
     <div className="drop-box">
@@ -103,6 +109,7 @@ const DropdownBox = () => {
     </div>
   </div>
   )
+  }
 }
 
 export default DropdownBox
