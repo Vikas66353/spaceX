@@ -1,5 +1,3 @@
-import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import Navbar from "./components/navbar/Navbar";
 import DropdownBox from "./components/dropdown/DropdownBox";

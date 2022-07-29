@@ -1,9 +1,7 @@
-import React, {useState} from 'react'
-import {GetLaunchedHistory} from "../../graphql/quries/launchesPast"
-import {useQuery} from '@apollo/client'
-import {Root,limit} from "../../typescript/launchedHistoryTS"
+import {Root} from "../../typescript/launchedHistoryTS"
 import 'antd/dist/antd.css';
 import { Table, Tag } from 'antd';
+import { useState } from "react";
 import "./mainTable.scss"
 import Modal from "./modal/MainTableModal"
 type Props={
@@ -12,7 +10,6 @@ type Props={
 }
 
 const Main_Table = ({tableData,loading}:Props) => {
-    // const {data,loading}=useQuery<Root,limit>(GetLaunchedHistory,{variables:{limit:109}});
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [rowID,setRowID]=useState<number>();
     const showModal = () => {
@@ -22,8 +19,6 @@ const Main_Table = ({tableData,loading}:Props) => {
     const handleCancel = () => {
       setIsModalVisible(false);
     };
-
-    // console.log(tableData)
     
 
     const columns = [

@@ -1,7 +1,7 @@
 import { DownOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Dropdown, Menu, message, Space } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { Dropdown, Menu, Space } from 'antd';
+import  { useEffect, useState } from 'react';
 import "./dropdown.scss"
 import Main_Table from '../mainTable/Main_Table';
 import {GetLaunchedHistory} from "../../graphql/quries/launchesPast"
@@ -12,7 +12,6 @@ import { Spin } from 'antd';
 const DropdownBox = () => {
   const [tableData,setTableData]=useState<Root>()
   const [getLaunchData,{data,loading}]=useLazyQuery<Root,limit>(GetLaunchedHistory,{variables:{limit:109}});
-  var id=0;
   useEffect(()=>{
     getLaunchData();
     if(loading===false && data){
@@ -30,7 +29,6 @@ const DropdownBox = () => {
   const onClick: MenuProps['onClick'] = ({ key }) => {
     if(key==="1"){
       updateTableData();
-      id=1;
       
     }
     if(key==="2"){
@@ -38,14 +36,12 @@ const DropdownBox = () => {
       setTableData((tableData)=>{  return {
         ...tableData,launchesPast:tableData?.launchesPast?.filter((launch)=>launch.upcoming===true)
       }})
-      id=2;
     }
     if(key==="4"){
       updateTableData();
       setTableData((tableData)=>{ return {
         ...tableData,launchesPast:tableData?.launchesPast?.filter((launch)=>launch.launch_success===false)
       }})
-      id=4;
       
     }
     if(key==="3"){
@@ -53,7 +49,6 @@ const DropdownBox = () => {
       setTableData((tableData)=>{return {
         ...tableData,launchesPast:tableData?.launchesPast?.filter((launch)=>launch.launch_success===true)
       }})
-      id=3;
     }
   };
 

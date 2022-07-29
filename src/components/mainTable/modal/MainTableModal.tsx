@@ -1,6 +1,5 @@
 import { Spin, Modal } from "antd";
 import "antd/dist/antd.css";
-import React, { useState } from "react";
 import "./modal.scss";
 import { Root, id } from "../../../typescript/findLaunchDetailsTS";
 import { useQuery } from "@apollo/client";
