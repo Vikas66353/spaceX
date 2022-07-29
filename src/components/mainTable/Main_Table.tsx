@@ -1,25 +1,26 @@
 import React, {useState} from 'react'
 import {GetLaunchedHistory} from "../../graphql/quries/launchesPast"
-import {useQuery } from '@apollo/client'
+import {useQuery} from '@apollo/client'
 import {Root,limit} from "../../typescript/launchedHistoryTS"
 import 'antd/dist/antd.css';
 import { Table, Tag } from 'antd';
 import Navbar from '../navbar/Navbar';
 import "./mainTable.scss"
-import LaunchDetails from "../LaunchDetails/LaunchDetails"
+import Modal from "./modal/MainTableModal"
+import DropdownBox from '../dropdown/DropdownBox';
 
 
 const Main_Table = () => {
-    const {data,loading,error}=useQuery<Root,limit>(GetLaunchedHistory,{variables:{limit:109}});
-    var color;
-
-    // data?.launchesPast.map((launch)=>{
-    //   console.log(launch)
-    // })
-
-    console.log(data?.launchesPast.length)
-
-    // for (var i=data?.launchesPast.length;i>=0;i--)
+    const {data,loading}=useQuery<Root,limit>(GetLaunchedHistory,{variables:{limit:109}});
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [rowID,setRowID]=useState<number>();
+    const showModal = () => {
+      setIsModalVisible(true);
+    };
+  
+    const handleCancel = () => {
+      setIsModalVisible(false);
+    };
 
     const columns = [
       {
@@ -57,7 +58,7 @@ const Main_Table = () => {
         key: 'id',
         render: (text: boolean, record:any) => (
           <>
-              <Tag className={record.upcoming?"upcoming_text": text?"success_text":"failed_text"} style={{borderRadius:20}} color={record.upcoming?"#FEF3C7":text?color="#DEF7EC":"#FDE2E1"} key={record.upcoming?"Upcoming": text?"Success":"Failed"}>    
+              <Tag className={record.upcoming?"upcoming_text": text?"success_text":"failed_text"} style={{borderRadius:20}} color={record.upcoming?"#FEF3C7":text?"#DEF7EC":"#FDE2E1"} key={record.upcoming?"Upcoming": text?"Success":"Failed"}>    
               {record.upcoming?"Upcoming": text?"Success":"Failed"}
               </Tag>
           </>
@@ -77,12 +78,11 @@ const Main_Table = () => {
 
   return (
     <div>
-      <Navbar/>
       <main>
       <div className="table_container">
-      <Table  rowClassName="main_table_row" onRow={(record)=>{return { onClick:event=>{}}}} locale={locale} loading={loading} dataSource={data?.launchesPast} className='main_table'  columns={columns} />; 
+      <Table  rowClassName="main_table_row" onRow={(record)=>{return { onClick:event=>{setRowID(record.id);showModal()}}}} locale={locale} loading={loading} dataSource={data?.launchesPast} className='main_table'  columns={columns} />; 
       </div>
-      <LaunchDetails/>
+      {rowID&&<Modal rowID={rowID} handleCancel={handleCancel} isModalVisible={isModalVisible}/>}
       </main>
     </div>
   )

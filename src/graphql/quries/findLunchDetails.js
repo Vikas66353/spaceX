@@ -1,33 +1,40 @@
 import { gql } from "@apollo/client";
 
-export const GetLaunchedHistory = gql`
-query launch($id: ID!) {
-  launch(id: $id) {
-    mission_name
-    launch_site {
-      site_name
-    }
-    rocket {
-      rocket_name
-      second_stage {
-        payloads {
-          orbit
-          nationality
-          payload_type
-          manufacturer
+export const FindLaunchDetail = gql`
+  query launch($id: ID!) {
+    launch(id: $id) {
+      mission_name
+      launch_site {
+        site_name
+      }
+      rocket {
+        rocket_name
+        second_stage {
+          payloads {
+            orbit
+            nationality
+            payload_type
+            manufacturer
+          }
+        }
+        rocket_type
+        rocket {
+          description
+          type
+        }
+        first_stage {
+          cores {
+            flight
+          }
         }
       }
-      rocket_type
-      rocket {
-        description
-        type
+      links {
+        wikipedia
+        video_link
       }
+      launch_date_local
+      launch_success
+      upcoming
     }
-    links {
-      video_link
-      wikipedia
-    }
-    launch_date_local
   }
-}
 `;

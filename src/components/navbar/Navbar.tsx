@@ -1,5 +1,5 @@
-import "./navbar.scss"
-import React from 'react'
+import "./navbar.scss";
+import React from "react";
 
 const Navbar = () => {
   return (
@@ -8,7 +8,7 @@ const Navbar = () => {
         <img src="/Assets/spaceXLOGO.png" alt="" />
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
