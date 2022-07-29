@@ -1,10 +1,13 @@
-// .drop-box{
-//     width:50vw;
-//     height: 30px;
-//     display: flex;
-//     justify-content: flex-end;
-//     margin-top: 80px;
-// }
+.main-container{
+    margin-top: 60px;
+
+}
+
+.drop-box{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
 
 .dropBox-head{
     font-weight: 500;

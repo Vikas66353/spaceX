@@ -81,14 +81,10 @@ const Main_Table = ({tableData,loading}:Props) => {
     }
 
   return (
-    <div>
       <main>
-      <div className="table_container">
       <Table  rowClassName="main_table_row" onRow={(record)=>{return { onClick:event=>{setRowID(record.id);showModal()}}}} locale={locale} loading={loading} dataSource={tableData?.launchesPast} className='main_table'  columns={columns} />; 
-      </div>
       {rowID&&<Modal rowID={rowID} handleCancel={handleCancel} isModalVisible={isModalVisible}/>}
       </main>
-    </div>
   )
 }
 

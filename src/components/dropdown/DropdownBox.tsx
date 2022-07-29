@@ -7,6 +7,7 @@ import Main_Table from '../mainTable/Main_Table';
 import {GetLaunchedHistory} from "../../graphql/quries/launchesPast"
 import {useLazyQuery} from '@apollo/client'
 import {Root,limit} from "../../typescript/launchedHistoryTS"
+import { Spin } from 'antd';
 
 const DropdownBox = () => {
   const [tableData,setTableData]=useState<Root>()
@@ -84,7 +85,7 @@ const DropdownBox = () => {
     />
   );
   return (
-    <div>
+    <div className='main-container'>
     <div className="drop-box">
     <Dropdown  overlay={menu}>
     <a onClick={e => e.preventDefault()}>
@@ -98,7 +99,7 @@ const DropdownBox = () => {
   </Dropdown>
     </div>
     <div className='table'>
-    {tableData && <Main_Table loading={loading}  tableData={tableData}/>}
+    {tableData&&<Main_Table loading={loading}  tableData={tableData}/>}
     </div>
   </div>
   )
