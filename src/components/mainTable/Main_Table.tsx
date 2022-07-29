@@ -4,14 +4,15 @@ import {useQuery} from '@apollo/client'
 import {Root,limit} from "../../typescript/launchedHistoryTS"
 import 'antd/dist/antd.css';
 import { Table, Tag } from 'antd';
-import Navbar from '../navbar/Navbar';
 import "./mainTable.scss"
 import Modal from "./modal/MainTableModal"
-import DropdownBox from '../dropdown/DropdownBox';
+type Props={
+  tableData:Root,
+  loading:boolean,
+}
 
-
-const Main_Table = () => {
-    const {data,loading}=useQuery<Root,limit>(GetLaunchedHistory,{variables:{limit:109}});
+const Main_Table = ({tableData,loading}:Props) => {
+    // const {data,loading}=useQuery<Root,limit>(GetLaunchedHistory,{variables:{limit:109}});
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [rowID,setRowID]=useState<number>();
     const showModal = () => {
@@ -21,6 +22,9 @@ const Main_Table = () => {
     const handleCancel = () => {
       setIsModalVisible(false);
     };
+
+    // console.log(tableData)
+    
 
     const columns = [
       {
@@ -80,7 +84,7 @@ const Main_Table = () => {
     <div>
       <main>
       <div className="table_container">
-      <Table  rowClassName="main_table_row" onRow={(record)=>{return { onClick:event=>{setRowID(record.id);showModal()}}}} locale={locale} loading={loading} dataSource={data?.launchesPast} className='main_table'  columns={columns} />; 
+      <Table  rowClassName="main_table_row" onRow={(record)=>{return { onClick:event=>{setRowID(record.id);showModal()}}}} locale={locale} loading={loading} dataSource={tableData?.launchesPast} className='main_table'  columns={columns} />; 
       </div>
       {rowID&&<Modal rowID={rowID} handleCancel={handleCancel} isModalVisible={isModalVisible}/>}
       </main>

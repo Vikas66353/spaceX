@@ -2,7 +2,7 @@ export interface limit {
   limit: number;
 }
 export interface Root {
-  launchesPast: LaunchesPast[];
+  launchesPast: LaunchesPast[]|undefined;
 }
 
 // export interface Root {
