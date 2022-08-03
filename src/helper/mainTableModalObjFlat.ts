@@ -1,7 +1,7 @@
 import {Root} from "../typescript/findLaunchDetailsTS"
 
 
-const modalObjfunc=(data:any)=>{
+const modalObjfunc=(data:any):Root=>{
     let tempdata=data.launch;
     
     let tempObj:Root={
@@ -23,7 +23,7 @@ const modalObjfunc=(data:any)=>{
 
     }
 
-    console.log(tempObj)
+    return tempObj;
 
     
 }
