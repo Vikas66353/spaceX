@@ -35,6 +35,7 @@ export const FindLaunchDetail = gql`
       launch_date_local
       launch_success
       upcoming
+      id
     }
   }
 `;

@@ -1,26 +1,34 @@
 import { Spin, Modal } from "antd";
 import "antd/dist/antd.css";
 import "./modal.scss";
-import { Root, id } from "../../../typescript/findLaunchDetailsTS";
+import {Root} from "../../../typescript/findLaunchDetailsTS"
 import { useQuery } from "@apollo/client";
 import { FindLaunchDetail } from "../../../graphql/quries/findLunchDetails";
+import {useLaunchQuery} from "../../../generated/graphql";
+import  convertInFlatObjec from "../../../helper/mainTableModalObjFlat"
 interface Props {
-  rowID: number;
+  rowID: string;
   handleCancel: () => void;
   isModalVisible: boolean;
 }
 
 const MainTableModal = ({ rowID, handleCancel, isModalVisible }: Props) => {
-  const { data, loading } = useQuery<Root, id>(FindLaunchDetail, {
-    variables: { id: rowID },
-  });
+  // const { data, loading } = useQuery<Root, id>(FindLaunchDetail, {
+  //   variables: { id: rowID },
+  // });
+
+  const { data, loading, error } = useLaunchQuery({variables: {id:rowID},});
+
+  if(data){
+    convertInFlatObjec(data);
+  }
 
   if (loading) {
     return <Spin />;
   } else {
     return (
       <div className="container">
-        <Modal
+        {/* <Modal
           confirmLoading={loading}
           onCancel={handleCancel}
           footer={null}
@@ -133,7 +141,7 @@ const MainTableModal = ({ rowID, handleCancel, isModalVisible }: Props) => {
               </div>
             </div>
           </div>
-        </Modal>
+        </Modal> */}
       </div>
     );
   }

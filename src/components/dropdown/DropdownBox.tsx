@@ -6,25 +6,40 @@ import "./dropdown.scss";
 import Main_Table from "../mainTable/Main_Table";
 import { GetLaunchedHistory } from "../../graphql/quries/launchesPast";
 import { useLazyQuery } from "@apollo/client";
-import { Root, limit } from "../../typescript/launchedHistoryTS";
+import { Root } from "../../typescript/launchedHistoryTS";
 import { Spin } from "antd";
+import convertInFlatObject from "../../helper/FlatMainTableObject";
+import {useLaunchesPastLazyQuery,Query} from "../../generated/graphql";
 
 const DropdownBox = () => {
-  const [tableData, setTableData] = useState<Root>();
-  const [getLaunchData, { data, loading }] = useLazyQuery<Root, limit>(
-    GetLaunchedHistory,
-    { variables: { limit: 109 } }
-  );
+  // const [getLaunchData, { data, loading }] = useLazyQuery<Root, limit>(
+  //   GetLaunchedHistory,
+  //   { variables: { limit: 109 } }
+  // );
+
+  const [getLaunchData,{ data, loading}] = useLaunchesPastLazyQuery({variables: {limit: 109},});
+
+  const [tableData, setTableData] = useState<Root[]>();
+  const [tempData,setTempData]=useState<Root[]>();
+
+  // convertInFlatObject();
+  
   useEffect(() => {
     getLaunchData();
+    // console.log(data?)
+    
     if (loading === false && data) {
-      setTableData(data);
+      let temp=convertInFlatObject(data);
+      setTempData(temp); 
+      setTableData(temp);
     }
+    console.log(tableData)
   }, [loading, data]);
+
 
   const updateTableData = () => {
     if (loading === false && data) {
-      setTableData(data);
+      setTableData(tempData);
     }
   };
 
@@ -34,35 +49,20 @@ const DropdownBox = () => {
     }
     if (key === "2") {
       updateTableData();
-      setTableData((tableData) => {
-        return {
-          ...tableData,
-          launchesPast: tableData?.launchesPast?.filter(
-            (launch) => launch.upcoming === true
-          ),
-        };
+      setTableData((tableData)=>{
+        return tableData?.filter((data)=>data.status==="Upcoming");
       });
     }
     if (key === "4") {
       updateTableData();
-      setTableData((tableData) => {
-        return {
-          ...tableData,
-          launchesPast: tableData?.launchesPast?.filter(
-            (launch) => launch.launch_success === false
-          ),
-        };
+      setTableData((tableData)=>{
+        return tableData?.filter((data)=>data.status==="Failed");
       });
     }
     if (key === "3") {
       updateTableData();
-      setTableData((tableData) => {
-        return {
-          ...tableData,
-          launchesPast: tableData?.launchesPast?.filter(
-            (launch) => launch.launch_success === true
-          ),
-        };
+      setTableData((tableData)=>{
+        return tableData?.filter((data)=>data.status==="Success");
       });
     }
   };

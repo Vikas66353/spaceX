@@ -5,13 +5,13 @@ import { useState } from "react";
 import "./mainTable.scss";
 import Modal from "./modal/MainTableModal";
 type Props = {
-  tableData: Root;
+  tableData: Root[];
   loading: boolean;
 };
 
 const Main_Table = ({ tableData, loading }: Props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [rowID, setRowID] = useState<number>();
+  const [rowID, setRowID] = useState<string>();
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -28,55 +28,52 @@ const Main_Table = ({ tableData, loading }: Props) => {
     },
     {
       title: "Launched (UTC)",
-      dataIndex: "launch_date_local",
+      dataIndex: "launchDate",
       key: "id",
     },
     {
       title: "Location",
-      dataIndex: "launch_site",
+      dataIndex: "location",
       key: "id",
-      render: (item: { [x: string]: any }): any => item["site_name"],
+      
     },
     {
       title: "Mission",
-      dataIndex: "mission_name",
+      dataIndex: "missionName",
       key: "id",
     },
     {
       title: "Orbit",
-      dataIndex: "rocket",
+      dataIndex: "orbit",
       key: "id",
-      render: (item: { [x: string]: any }): any =>
-        item["second_stage"]["payloads"][0]["orbit"],
     },
     {
       title: "Launch Status",
-      dataIndex: "launch_success",
+      dataIndex: "status",
       key: "id",
-      render: (text: boolean, record: any) => (
-        <>
+      render: (record: any) => (
           <Tag
-            className={
-              record.upcoming
-                ? "upcoming_text"
-                : text
-                ? "success_text"
-                : "failed_text"
-            }
-            style={{ borderRadius: 20 }}
-            color={record.upcoming ? "#FEF3C7" : text ? "#DEF7EC" : "#FDE2E1"}
-            key={record.upcoming ? "Upcoming" : text ? "Success" : "Failed"}
+            className={record.toLowerCase()}
+            style={{ borderRadius: 20,
+            width:"58px",
+            height:"21px",
+            fontWeight:500,
+            fontSize:"12px",
+            lineHeight:"13px",
+            display:"flex",
+            alignItems:"center",
+            justifyContent:"center",
+            padding:"4px , 12px, 4px ,12px"
+           }}
           >
-            {record.upcoming ? "Upcoming" : text ? "Success" : "Failed"}
+            {record}
           </Tag>
-        </>
       ),
     },
     {
       title: "Rocket",
-      dataIndex: "rocket",
+      dataIndex: "rocketName",
       key: "id",
-      render: (item: { [x: string]: any }): any => item["rocket_name"],
     },
   ];
 
@@ -90,14 +87,14 @@ const Main_Table = ({ tableData, loading }: Props) => {
         onRow={(record) => {
           return {
             onClick: (event) => {
-              setRowID(record.id);
+              setRowID(record.id)
               showModal();
             },
           };
         }}
         locale={locale}
         loading={loading}
-        dataSource={tableData?.launchesPast}
+        dataSource={tableData}
         className="main_table"
         columns={columns}
       />
