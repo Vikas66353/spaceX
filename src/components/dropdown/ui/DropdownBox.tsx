@@ -3,13 +3,13 @@ import type { MenuProps } from "antd";
 import { Dropdown, Menu, Space } from "antd";
 import { useEffect, useState } from "react";
 import "./dropdown.scss";
-import Main_Table from "../mainTable/Main_Table";
-import { GetLaunchedHistory } from "../../graphql/quries/launchesPast";
+import {MainTable} from "../../mainTable";
+import { GetLaunchedHistory } from "../../../graphql/quries/launchesPast";
 import { useLazyQuery } from "@apollo/client";
-import { Root } from "../../typescript/launchedHistoryTS";
+import { Root } from "../../../typescript/launchedHistoryTS";
 import { Spin } from "antd";
-import convertInFlatObject from "../../helper/FlatMainTableObject";
-import {useLaunchesPastLazyQuery,Query} from "../../generated/graphql";
+import convertInFlatObject from "../../../helper/FlatMainTableObject";
+import { useLaunchesPastLazyQuery, Query } from "../../../generated/graphql";
 
 const DropdownBox = () => {
   // const [getLaunchData, { data, loading }] = useLazyQuery<Root, limit>(
@@ -17,25 +17,24 @@ const DropdownBox = () => {
   //   { variables: { limit: 109 } }
   // );
 
-  const [getLaunchData,{ data, loading}] = useLaunchesPastLazyQuery({variables: {limit: 109},});
+  const [getLaunchData, { data, loading }] = useLaunchesPastLazyQuery({
+    variables: { limit: 109 },
+  });
 
   const [tableData, setTableData] = useState<Root[]>();
-  const [tempData,setTempData]=useState<Root[]>();
+  const [tempData, setTempData] = useState<Root[]>();
 
   // convertInFlatObject();
-  
+
   useEffect(() => {
     getLaunchData();
-    // console.log(data?)
-    
+
     if (loading === false && data) {
-      let temp=convertInFlatObject(data);
-      setTempData(temp); 
+      let temp = convertInFlatObject(data);
+      setTempData(temp);
       setTableData(temp);
     }
-    console.log(tableData)
   }, [loading, data]);
-
 
   const updateTableData = () => {
     if (loading === false && data) {
@@ -49,20 +48,20 @@ const DropdownBox = () => {
     }
     if (key === "2") {
       updateTableData();
-      setTableData((tableData)=>{
-        return tableData?.filter((data)=>data.status==="Upcoming");
+      setTableData((tableData) => {
+        return tableData?.filter((data) => data.status === "Upcoming");
       });
     }
     if (key === "4") {
       updateTableData();
-      setTableData((tableData)=>{
-        return tableData?.filter((data)=>data.status==="Failed");
+      setTableData((tableData) => {
+        return tableData?.filter((data) => data.status === "Failed");
       });
     }
     if (key === "3") {
       updateTableData();
-      setTableData((tableData)=>{
-        return tableData?.filter((data)=>data.status==="Success");
+      setTableData((tableData) => {
+        return tableData?.filter((data) => data.status === "Success");
       });
     }
   };
@@ -118,7 +117,7 @@ const DropdownBox = () => {
           </Dropdown>
         </div>
         <div className="table">
-          {tableData && <Main_Table loading={loading} tableData={tableData} />}
+          {tableData && <MainTable loading={loading} tableData={tableData} />}
         </div>
       </div>
     );

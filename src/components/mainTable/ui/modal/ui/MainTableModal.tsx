@@ -1,11 +1,12 @@
 import { Spin, Modal } from "antd";
 import "antd/dist/antd.css";
 import "./modal.scss";
-import {Root} from "../../../typescript/findLaunchDetailsTS"
+import { Root } from "../../../../../typescript/findLaunchDetailsTS";
 import { useQuery } from "@apollo/client";
-import { FindLaunchDetail } from "../../../graphql/quries/findLunchDetails";
-import {useLaunchQuery} from "../../../generated/graphql";
-import  convertInFlatObjec from "../../../helper/mainTableModalObjFlat"
+import { FindLaunchDetail } from "../../../../../graphql/quries/findLunchDetails";
+import { useLaunchQuery } from "../../../../../generated/graphql";
+import convertInFlatObjec from "../../../../../helper/mainTableModalObjFlat";
+import { useEffect, useState } from "react";
 interface Props {
   rowID: string;
   handleCancel: () => void;
@@ -17,11 +18,18 @@ const MainTableModal = ({ rowID, handleCancel, isModalVisible }: Props) => {
   //   variables: { id: rowID },
   // });
 
-  const { data, loading, error } = useLaunchQuery({variables: {id:rowID},});
+  const { data, loading } = useLaunchQuery({ variables: { id: rowID } });
+  const [modalData, setModalData] = useState<Root|{}>();
+  const [testData, setTestData] = useState("hello");
 
-  if(data){
-    convertInFlatObjec(data);
-  }
+
+  useEffect(()=>{
+    if (loading === false && data) {
+      // setModalData(convertInFlatObjec(data))
+      // console.log(modalData)
+    }
+  },[data,loading])
+  
 
   if (loading) {
     return <Spin />;
@@ -46,34 +54,26 @@ const MainTableModal = ({ rowID, handleCancel, isModalVisible }: Props) => {
                 </div>
                 <div className="logo_content" style={{ marginLeft: "15px" }}>
                   <div style={{ display: "flex", margin: "0", padding: "0" }}>
-                    <div className="heading">{data?.launch.mission_name}</div>
+                    <div className="heading">{modalData?.messionName}</div>
                     <div
                       className={`status-container ${
-                        data?.launch.upcoming
-                          ? "upcoming"
-                          : data?.launch.launch_success
-                          ? "success"
-                          : "failed"
+                        modalData?.status.toLowerCase()
                       }`}
                     >
-                      {data?.launch.upcoming
-                        ? "Upcoming"
-                        : data?.launch.launch_success
-                        ? "Success"
-                        : "Failed"}
+                      {modalData?.status}
                     </div>
                   </div>
                   <div>
-                    <h5>{data?.launch.rocket.rocket_name}</h5>
+                    <h5>{modalData?.rocketName}</h5>
                   </div>
                   <div>
                     <a href="#">
                       <img src="/Assets/NASA.svg" alt="" />
                     </a>
-                    <a href={data?.launch.links.wikipedia}>
+                    <a href={modalData?.wikipediaLink}>
                       <img src="/Assets/wikipedia.svg" alt="" />
                     </a>
-                    <a href={data?.launch.links.video_link}>
+                    <a href={modalData?.videoLink}>
                       <img src="/Assets/youtube.svg" alt="" />
                     </a>
                   </div>
@@ -86,58 +86,58 @@ const MainTableModal = ({ rowID, handleCancel, isModalVisible }: Props) => {
           <div>
             <div className="desc">
               <p>
-                {data?.launch.rocket.rocket.description}
-                <a href={data?.launch.links.wikipedia}>wikipedia</a>
+                {modalData?.desc}
+                <a href={modalData?.wikipediaLink}>wikipedia</a>
               </p>
             </div>
             <div className="info_container">
               <div className="info">
                 <label>Flight Number</label>
-                <span>{data?.launch.rocket.first_stage.cores[0].flight}</span>
+                <span>{modalData?.flightNo}</span>
               </div>
               <div className="info">
                 <label>Mission Name</label>
-                <span>{data?.launch.mission_name}</span>
+                <span>{modalData?.messionName}</span>
               </div>
               <div className="info">
                 <label>Rocket Type</label>
-                <span>{data?.launch.rocket.rocket_type}</span>
+                <span>{modalData?.rocketType}</span>
               </div>
               <div className="info">
                 <label>Rocket Name</label>
-                <span>{data?.launch.rocket.rocket_name}</span>
+                <span>{modalData?.rocketName}</span>
               </div>
               <div className="info">
                 <label>Manufacturer</label>
                 <span>
-                  {data?.launch.rocket.second_stage.payloads[0].manufacturer}
+                  {modalData?.manufacturer}
                 </span>
               </div>
               <div className="info">
                 <label>Nationality</label>
                 <span>
-                  {data?.launch.rocket.second_stage.payloads[0].nationality}
+                  {modalData?.nationality}
                 </span>
               </div>
               <div className="info">
                 <label>Launch Date</label>
-                <span>{data?.launch.launch_date_local}</span>
+                <span>{modalData?.launchDate}</span>
               </div>
               <div className="info">
                 <label>Payload Type</label>
                 <span>
-                  {data?.launch.rocket.second_stage.payloads[0].payload_type}
+                  {modalData?.payloadType}
                 </span>
               </div>
               <div className="info">
                 <label>Orbit</label>
                 <span>
-                  {data?.launch.rocket.second_stage.payloads[0].orbit}
+                  {modalData?.orbit}
                 </span>
               </div>
               <div className="info">
                 <label>Launch Site</label>
-                <span>{data?.launch.launch_site.site_name}</span>
+                <span>{modalData?.launchSite}</span>
               </div>
             </div>
           </div>

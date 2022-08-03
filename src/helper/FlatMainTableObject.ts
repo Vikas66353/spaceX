@@ -1,9 +1,6 @@
-import React from "react"
-import { isTemplateExpression } from "typescript";
 import { Root } from "../typescript/launchedHistoryTS";
 
 function convertInFlatObjec(data:any):Root[]{
-    // console.log(data.launchesPast)
     let temp:Root[] = data.launchesPast.map((launch:Root)=>{return(
         {
             "id":launch.id,

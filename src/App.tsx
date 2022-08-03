@@ -1,6 +1,6 @@
 import "./App.css";
-import Navbar from "./components/navbar/Navbar";
-import DropdownBox from "./components/dropdown/DropdownBox";
+import Navbar from "./components/navbar";
+import DropdownBox from "./components/dropdown";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import "antd/dist/antd.css";
 

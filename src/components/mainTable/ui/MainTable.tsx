@@ -1,15 +1,15 @@
-import { Root } from "../../typescript/launchedHistoryTS";
+import { Root } from "../../../typescript/launchedHistoryTS";
 import "antd/dist/antd.css";
 import { Table, Tag } from "antd";
 import { useState } from "react";
 import "./mainTable.scss";
-import Modal from "./modal/MainTableModal";
+import Modal from "./modal";
 type Props = {
   tableData: Root[];
   loading: boolean;
 };
 
-const Main_Table = ({ tableData, loading }: Props) => {
+const MainTable = ({ tableData, loading }: Props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [rowID, setRowID] = useState<string>();
   const showModal = () => {
@@ -110,4 +110,4 @@ const Main_Table = ({ tableData, loading }: Props) => {
   );
 };
 
-export default Main_Table;
+export default MainTable;
