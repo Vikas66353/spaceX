@@ -1,5 +1,6 @@
 export interface Root{
-  messionName:string;
+  id:string,
+  messionName:string,
   status:string,
   rocketName:string,
   videoLink:string,
