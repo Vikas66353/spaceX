@@ -16,6 +16,7 @@ const DropdownBox = () => {
   //   GetLaunchedHistory,
   //   { variables: { limit: 109 } }
   // );
+  const [dropDownStatus,setDropDownStatus]=useState("All Launches");
 
   const [getLaunchData, { data, loading }] = useLaunchesPastLazyQuery({
     variables: { limit: 109 },
@@ -44,22 +45,27 @@ const DropdownBox = () => {
 
   const onClick: MenuProps["onClick"] = ({ key }) => {
     if (key === "1") {
+      setDropDownStatus("All Launches")
       updateTableData();
+      
     }
     if (key === "2") {
       updateTableData();
+      setDropDownStatus("Upcoming Launches")
       setTableData((tableData) => {
         return tableData?.filter((data) => data.status === "Upcoming");
       });
     }
     if (key === "4") {
       updateTableData();
+      setDropDownStatus("Failed Lanuches")
       setTableData((tableData) => {
         return tableData?.filter((data) => data.status === "Failed");
       });
     }
     if (key === "3") {
       updateTableData();
+      setDropDownStatus("Successfull Lanches")
       setTableData((tableData) => {
         return tableData?.filter((data) => data.status === "Success");
       });
@@ -109,7 +115,7 @@ const DropdownBox = () => {
             <a onClick={(e) => e.preventDefault()}>
               <Space>
                 <div className="dropBox-head">
-                  <img src="/Assets/Vector.svg" alt="" /> All Launches
+                  <img src="/Assets/Vector.svg" alt="" /> {dropDownStatus}
                 </div>
                 <DownOutlined style={{ color: "#4B5563" }} />
               </Space>
