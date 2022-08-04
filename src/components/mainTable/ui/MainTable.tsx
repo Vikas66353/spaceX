@@ -83,7 +83,7 @@ const MainTable = ({ tableData, loading }: Props) => {
 
   return (
     <main>
-      <Table
+      <Table className="mainTable" 
         onRow={(record) => {
           return {
             onClick: (event) => {
@@ -95,12 +95,12 @@ const MainTable = ({ tableData, loading }: Props) => {
         locale={locale}
         loading={loading}
         dataSource={tableData}
-        className="main_table"
         columns={columns}
       />
       ;
       {rowID && (
         <Modal
+        showModal={showModal}
           rowID={rowID}
           handleCancel={handleCancel}
           isModalVisible={isModalVisible}

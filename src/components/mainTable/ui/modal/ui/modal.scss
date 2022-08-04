@@ -17,14 +17,39 @@ $failed_text: #981b1c;
   }
 }
 
-label {
-  width: 164px;
+.tableModal{
+  .heading{
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    color: #1F2937;
+  }
+  .rocketNameNav{
+font-weight: 400;
+font-size: 12px;
+line-height: 12px;
+color: #374151;
+  }
+  .descPara{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    color: #1F2937;
+  }
+  .infoDetail{
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 14px;
+    color:#4B5563 ;
+  }
+  .anticon >svg{
+    color:#4B5563 ;
+  }
 }
 
-.heading {
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 18px;
+
+label {
+  width: 164px;
 }
 
 .status-container {

@@ -11,32 +11,32 @@ interface Props {
   rowID: string;
   handleCancel: () => void;
   isModalVisible: boolean;
+  showModal:()=>void
 }
 
-const MainTableModal = ({ rowID, handleCancel, isModalVisible }: Props) => {
-  // const { data, loading } = useQuery<Root, id>(FindLaunchDetail, {
-  //   variables: { id: rowID },
-  // });
+const MainTableModal = ({ rowID, handleCancel, isModalVisible,showModal }: Props) => {
+
 
   const { data, loading } = useLaunchQuery({ variables: { id: rowID } });
-  const [modalData, setModalData] = useState<Root|{}>();
+  const [modalData, setModalData] = useState<Root>();
   const [testData, setTestData] = useState("hello");
 
 
   useEffect(()=>{
     if (loading === false && data) {
-      // setModalData(convertInFlatObjec(data))
-      // console.log(modalData)
-    }
+      let temp=convertInFlatObjec(data)
+      setModalData(temp)
+      }
   },[data,loading])
-  
+  console.log(modalData)
 
   if (loading) {
     return <Spin />;
   } else {
     return (
       <div className="container">
-        {/* <Modal
+        <Modal
+        className="tableModal"
           confirmLoading={loading}
           onCancel={handleCancel}
           footer={null}
@@ -64,7 +64,7 @@ const MainTableModal = ({ rowID, handleCancel, isModalVisible }: Props) => {
                     </div>
                   </div>
                   <div>
-                    <h5>{modalData?.rocketName}</h5>
+                    <h5 className="rocketNameNav">{modalData?.rocketName}</h5>
                   </div>
                   <div>
                     <a href="#">
@@ -85,63 +85,63 @@ const MainTableModal = ({ rowID, handleCancel, isModalVisible }: Props) => {
         >
           <div>
             <div className="desc">
-              <p>
+              <p className="descPara">
                 {modalData?.desc}
                 <a href={modalData?.wikipediaLink}>wikipedia</a>
               </p>
             </div>
             <div className="info_container">
               <div className="info">
-                <label>Flight Number</label>
-                <span>{modalData?.flightNo}</span>
+                <label className="infoDetail">Flight Number</label>
+                <span className="infoDetail">{modalData?.flightNo}</span>
               </div>
               <div className="info">
-                <label>Mission Name</label>
-                <span>{modalData?.messionName}</span>
+                <label className="infoDetail">Mission Name</label>
+                <span className="infoDetail">{modalData?.messionName}</span>
               </div>
               <div className="info">
-                <label>Rocket Type</label>
-                <span>{modalData?.rocketType}</span>
+                <label className="infoDetail">Rocket Type</label>
+                <span className="infoDetail">{modalData?.rocketType}</span>
               </div>
               <div className="info">
-                <label>Rocket Name</label>
-                <span>{modalData?.rocketName}</span>
+                <label className="infoDetail">Rocket Name</label>
+                <span className="infoDetail">{modalData?.rocketName}</span>
               </div>
               <div className="info">
-                <label>Manufacturer</label>
-                <span>
+                <label className="infoDetail">Manufacturer</label>
+                <span className="infoDetail">
                   {modalData?.manufacturer}
                 </span>
               </div>
               <div className="info">
-                <label>Nationality</label>
-                <span>
+                <label className="infoDetail">Nationality</label>
+                <span className="infoDetail">
                   {modalData?.nationality}
                 </span>
               </div>
               <div className="info">
-                <label>Launch Date</label>
-                <span>{modalData?.launchDate}</span>
+                <label className="infoDetail">Launch Date</label>
+                <span className="infoDetail">{modalData?.launchDate}</span>
               </div>
               <div className="info">
-                <label>Payload Type</label>
-                <span>
+                <label className="infoDetail">Payload Type</label>
+                <span className="infoDetail">
                   {modalData?.payloadType}
                 </span>
               </div>
               <div className="info">
-                <label>Orbit</label>
-                <span>
+                <label className="infoDetail">Orbit</label>
+                <span className="infoDetail">
                   {modalData?.orbit}
                 </span>
               </div>
               <div className="info">
-                <label>Launch Site</label>
-                <span>{modalData?.launchSite}</span>
+                <label className="infoDetail">Launch Site</label>
+                <span className="infoDetail">{modalData?.launchSite}</span>
               </div>
             </div>
           </div>
-        </Modal> */}
+        </Modal>
       </div>
     );
   }
